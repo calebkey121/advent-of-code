@@ -1,5 +1,5 @@
 def main():
-    input_file = "test.txt"
+    input_file = "day4_input.txt"
     scores = {}
 
     with open(input_file) as f:
@@ -23,9 +23,19 @@ def main():
             score = int(hits) # with zero hits, this is 0.5 but truncated will be zero
             scores[card] = score
 
-        print(scores)
+        copies = {i: 1 for i in range(1,len(scores) + 1)} # each entry is the amount of copies of that card, start with the original
 
-        copies = {}
+        for card, score in scores.items():
+            for _ in range(copies[card]): # run for each copy of the card
+                for i in range(card + 1, card + score + 1): # range starts at card + 1 and advances for each hit 
+                    if i <= len(copies): # cards will never copy past end of table
+                        copies[i] += 1
+
+        total = 0
+        for card, copies in copies.items():
+            total += copies
+        print(total)
+
 
 if __name__ == "__main__":
     main()
