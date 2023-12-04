@@ -1,5 +1,5 @@
 # List of symbols: {'%', '\n', '&', '/', '#', '*', '-', '$', '=', '+', '@'}
-all_found_numbers = set()
+FOUND_NUMBERS = {} # Newly discovered numbers are added as ()
 
 def check_surroundings(lines, row, col):
     cells_to_check = [
@@ -34,17 +34,23 @@ def check_surroundings(lines, row, col):
         c = cell[1]
         # loop to the right to find the least significant digit
         i = c
-        while i + 1 < (len(lines[r]) - 1) and lines[r][(i + 1)].isdigit(): # while in bounds and next cell is digit
+        while i + 1 < (len(lines[r])) and lines[r][(i + 1)].isdigit(): # while in bounds and next cell is digit
             i += 1
         
         # i is now at least significant digit, now loop to the left and build our number 
         number = 0
         significance = 0
+        coords = [] # Coords will compare against 
         while i >= 0 and lines[r][i].isdigit():
+            coords.append((r, i))
             number += int(lines[r][i]) * 10 ** significance
             significance += 1
             i -= 1
-        found_numbers.append(number)
+        
+        # We've built our number, now check if its been found before
+        if number not in FOUND_NUMBERS or FOUND_NUMBERS[number] != coords:
+            FOUND_NUMBERS[number] = coords
+            found_numbers.append(number)
 
     return found_numbers
 
