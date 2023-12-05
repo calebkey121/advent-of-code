@@ -1,4 +1,7 @@
+import time
+
 def main():
+    start_time = time.time()
     input_file = "day4_input.txt"
     scores = {}
 
@@ -35,6 +38,10 @@ def main():
         for card, copies in copies.items():
             total += copies
         print(total)
+
+    end_time = time.time()
+    duration = end_time - start_time
+    print(f"Time taken: {duration} seconds")
 
 
 if __name__ == "__main__":
