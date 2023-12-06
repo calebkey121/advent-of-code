@@ -28,7 +28,7 @@ def travelUp(value, level):
     return seed
 
 def main():
-    input_file = "day5_input.txt"
+    input_file = "test.txt"
 
     with open(input_file) as f:
         lines = [ line.rstrip("\n") for line in f.readlines() if line != '\n']
@@ -46,45 +46,13 @@ def main():
         
         # yeah if no seeds exist this wont work i get it
         location = 0
-        found = False
         while True:
             seed = travelUp(location, level=7)
-
-            # Check if in seeds, this time defines ranges of seeds, 
-            for i in range(0, len(MAPPING["seeds"]), 2):
-                start = MAPPING["seeds"][i]
-                end = start + MAPPING["seeds"][i + 1]
-                if start <= seed < end:
-                    found = True
-            
-            if found:
-                print(f"Approximately found the seed around location {location}!")
+            if seed in MAPPING["seeds"]:
+                print(location)
                 break
             else:
-                print(f"location: {location}, seed: {seed}")
-                location += 10000
-
-        location -= 10000
-        found = False
-        for _ in range(10000):
-            seed = travelUp(location, level=7)
-
-            # Check if in seeds, this time defines ranges of seeds, 
-            for i in range(0, len(MAPPING["seeds"]), 2):
-                start = MAPPING["seeds"][i]
-                end = start + MAPPING["seeds"][i + 1]
-                if start <= seed < end:
-                    found = True
-
-            if found:
-                print(f"Found the seed at location {location}!!! Seed {seed}!!!")
-                return
-            else:
-                print(f"location: {location}, seed: {seed}")
                 location += 1
-
-
-
 
 
 if __name__ == "__main__":
