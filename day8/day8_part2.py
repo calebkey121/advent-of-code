@@ -1,4 +1,5 @@
 import time
+from math import lcm
 
 # 3863263 too low
 # 41190697 too low
@@ -7,6 +8,7 @@ import time
 # 1243836193 wont tell me
 # 2052853129
 # 2613314269 i give, apparently its 14 digits
+# 23977527174353
 
 class Node():
     def __init__(self, id, left, right) -> None:
@@ -42,33 +44,26 @@ def main():
                     node.right = r
                     break
 
-        curr = []
         # Find all starting nodes
+        zSteps = [] # will store the number of steps to take to z
         for node in nodes:
-            if node.id[-1] == "A":
-                curr.append(node)
+            if node.id[-1] == 'A':
+                # Found a node that ends in A, get to the z and record the num of steps
+                found = False
+                steps = 0
+                while not found:
+                    for direction in instructions:
+                        if node.id[-1] == 'Z':
+                            found = True
+                            zSteps.append(steps)
+                            break
+                        if direction == 'R':
+                            node = node.right
+                        elif direction == 'L':
+                            node = node.left
+                        steps += 1
 
-
-        found = False
-        steps = 0
-        while not found:
-            for direction in instructions:
-                # see if all found the end
-                for node in curr:
-                    found = True
-                    if node.id[-1] != 'Z':
-                        found = False
-                        break # continue on below
-                if found: break # if you get out of the above loop, break
-                if direction == 'L': # left
-                    for node in range(len(curr)):
-                        curr[node] = curr[node].left
-                elif direction == 'R': # right
-                    for node in range(len(curr)):
-                        curr[node] = curr[node].right
-                steps += 1
-
-        print(steps)
+        print(lcm(*zSteps))
 
 
 if __name__ == "__main__":
