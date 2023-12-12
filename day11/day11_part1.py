@@ -1,7 +1,13 @@
 import time
 
+# a and b are tuples of two ints
+# return number of steps
+def shortestPath(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
 def main():
-    input_file = "input.txt"
+    input_file = "day11_input.txt"
 
     with open(input_file) as f:
         lines = [ line.rstrip() for line in f.readlines() ]
@@ -35,6 +41,20 @@ def main():
             expanded.insert(row, '.' * len(expanded[0]))
 
         # Expandings Finished
+        galaxies = []
+        for row in range(len(expanded)):
+            for col in range(len(expanded[0])):
+                if expanded[row][col] == '#':
+                    galaxies.append((row, col))
+
+        total = 0
+        for a in galaxies[:-1]:
+            ind = galaxies.index(a) + 1
+            for b in galaxies[ind:]:
+                total += shortestPath(a, b)
+
+        print(total)
+
 
 if __name__ == "__main__":
     start_time = time.time()
