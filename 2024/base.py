@@ -1,7 +1,7 @@
 import time
 
 def main():
-    input_file = "input.txt"
+    input_file = "input/day_1_input.txt"
 
     with open(input_file) as f:
         lines = f.readlines()
