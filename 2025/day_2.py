@@ -21,7 +21,7 @@ def part_2(input_data):
             # start with 1 up to len(id) // 2
             for check_len in range(1, (len(id) // 2) + 1):
                 if len(id) % check_len != 0:
-                    continue # not possible for even split
+                    continue # not possible for uneven split
                 # split into equal parts of length check_len
                 splits = [id[i * check_len: (i * check_len) + check_len ] for i in range(len(id) // check_len)]
                 # check if all parts are equal (eqivalent to checking if all are equal to the first part)
